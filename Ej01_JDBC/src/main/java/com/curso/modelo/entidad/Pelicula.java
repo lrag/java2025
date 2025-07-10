@@ -1,11 +1,23 @@
 package com.curso.modelo.entidad;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="PELICULAS")
 public class Pelicula {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String titulo;
 	private String director;
 	private String genero;
+	@Column(name="YEAR_")
 	private Integer year;
 	private String sinopsis;
 

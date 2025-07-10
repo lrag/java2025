@@ -7,6 +7,14 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import com.curso.modelo.entidad.Pelicula;
+import com.curso.persistencia.PeliculaDao;
+import com.curso.persistencia.PeliculaDaoJdbcH2Implementation;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+
 
 public class Aplicacion {
 
@@ -59,8 +67,56 @@ public class Aplicacion {
 		
 		///////////////////////////////////////
 		Connection cx = DriverManager.getConnection("jdbc:h2:C:/H2/bbdd_peliculas_2025","sa","");
-		System.out.println(cx);
+		System.out.println("Conexión obtenida del DriverManager: "+cx+", "+cx.getClass().getName());
+		cx.close();
+		System.out.println();
 		
+		
+		try {
+			Class.forName("com.curso.Monger").getConstructor().newInstance();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		///////////////////////////////////////////////////////////////////////////
+		
+		Pelicula p1 = new Pelicula(null,"Alien","RS","CiFi",1979,"En el espacio nadie puede oirte gritar");
+		PeliculaDao peliculaDao = new PeliculaDaoJdbcH2Implementation();
+		//peliculaDao.insertar(p1);
+		List<Pelicula> peliculas = peliculaDao.listar();
+		for(Pelicula p: peliculas) {
+			System.out.println(p);
+		}
+		
+		///////////////////////////////////////////////////////////////////////////
+		
+		//DataSource ds;
+		//ds.getConnection();
+		
+		
+		
+		HikariConfig hkCfg = new HikariConfig();
+		hkCfg.setJdbcUrl("jdbc:h2:C:/H2/bbdd_peliculas_2025");
+		hkCfg.setDriverClassName("org.h2.Driver");
+		hkCfg.setUsername("sa");
+		hkCfg.setPassword("");			
+		
+		DataSource ds = new HikariDataSource(hkCfg);
+		
+		Connection cx3 = ds.getConnection();
+		System.out.println("Conexión obtenida del data source: "+cx3+", "+cx3.getClass().getName());
+		cx3.close();
+		
+		
+		Cliente c = new Cliente();
+		c.setNombre("Ringo Starr");
+		c.setDireccion("C/Su calle");
+		
+		Cliente c2 = new Cliente()
+			.setNombre("Ripley")
+			.setDireccion("C/Falsa, 123")
+			.setTelefono("555123456");
 		
 	}
 	
@@ -69,9 +125,28 @@ public class Aplicacion {
 
 class Cliente {	
 	String nombre;
-	List<String> direccion;
-	String telefono;	
+	String direccion;
+	String telefono;
+	
+	public Cliente setNombre(String nombre) {
+		this.nombre = nombre;
+		return this;
+	}
+	
+	public Cliente setDireccion(String direccion) {
+		this.direccion = direccion;
+		return this;
+	}
+	
+	public Cliente setTelefono(String telefono) {
+		this.telefono = telefono;
+		return this;
+	}
+	
 }
+
+
+
 
 class Campo {
 	String nombre;

@@ -12,6 +12,10 @@ import com.curso.modelo.entidad.Pelicula;
 
 public class PeliculaDaoJdbcH2Implementation implements PeliculaDao{
 
+	//
+	//Este DAO implementa el antipatrón 'UNA CONEXIÓN POR CADA CONSULTA'
+	//	
+	
 	@Override
 	public void insertar(Pelicula pelicula) {
 		
@@ -25,12 +29,12 @@ public class PeliculaDaoJdbcH2Implementation implements PeliculaDao{
 			//Statement st = cx.createStatement();
 			//st.executeUpdate("insert into PELICULAS (TITULO, DIRECTOR, GENERO, YEAR, SINOPSIS) values ('"+pelicula.getTitulo()+"','"+pelicula.getDirector()+"','"+pelicula.getGenero()+"',"+pelicula.getYear()+",'"+pelicula.getSinopsis()+"')");
 			
-			PreparedStatement pst = cx.prepareStatement("insert into PELICULAS (TITULO, DIRECTOR, GENERO, YEAR, SINOPSIS) values (?, ?, ?, ?, )");
-			pst.setString(0, pelicula.getTitulo());		
-			pst.setString(1, pelicula.getDirector());		
-			pst.setString(2, pelicula.getGenero());		
-			pst.setInt(3, pelicula.getYear());		
-			pst.setString(4, pelicula.getSinopsis());		
+			PreparedStatement pst = cx.prepareStatement("insert into PELICULAS (TITULO, DIRECTOR, GENERO, YEAR_, SINOPSIS) values (?, ?, ?, ?, ?)");
+			pst.setString(1, pelicula.getTitulo());		
+			pst.setString(2, pelicula.getDirector());		
+			pst.setString(3, pelicula.getGenero());		
+			pst.setInt(4, pelicula.getYear());		
+			pst.setString(5, pelicula.getSinopsis());		
 			pst.executeUpdate();
 					
 			/*
@@ -49,13 +53,13 @@ public class PeliculaDaoJdbcH2Implementation implements PeliculaDao{
 	@Override
 	public void modificar(Pelicula pelicula) {
 		try ( Connection cx = DriverManager.getConnection("jdbc:h2:C:/H2/bbdd_peliculas_2025","sa","");	) {
-			PreparedStatement pst = cx.prepareStatement("uptade PELICULAS set TITULO=?, DIRECTOR=?, GENERO=?, YEAR=?, SINOPSIS=? WHERE id=?");
-			pst.setString(0, pelicula.getTitulo());		
-			pst.setString(1, pelicula.getDirector());		
-			pst.setString(2, pelicula.getGenero());		
-			pst.setInt(3, pelicula.getYear());		
-			pst.setString(4, pelicula.getSinopsis());		
-			pst.setInt(5, pelicula.getId());		
+			PreparedStatement pst = cx.prepareStatement("uptade PELICULAS set TITULO=?, DIRECTOR=?, GENERO=?, YEAR_=?, SINOPSIS=? WHERE id=?");
+			pst.setString(1, pelicula.getTitulo());		
+			pst.setString(2, pelicula.getDirector());		
+			pst.setString(3, pelicula.getGenero());		
+			pst.setInt(4, pelicula.getYear());		
+			pst.setString(5, pelicula.getSinopsis());		
+			pst.setInt(6, pelicula.getId());		
 			pst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -66,7 +70,7 @@ public class PeliculaDaoJdbcH2Implementation implements PeliculaDao{
 	public void borrar(Pelicula pelicula) {
 		try ( Connection cx = DriverManager.getConnection("jdbc:h2:C:/H2/bbdd_peliculas_2025","sa","");	) {
 			PreparedStatement pst = cx.prepareStatement("delete from PELICULAS WHERE id=?");
-			pst.setInt(0, pelicula.getId());		
+			pst.setInt(1, pelicula.getId());		
 			pst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -78,8 +82,8 @@ public class PeliculaDaoJdbcH2Implementation implements PeliculaDao{
 		Pelicula p = null;
 		
 		try ( Connection cx = DriverManager.getConnection("jdbc:h2:C:/H2/bbdd_peliculas_2025","sa","");	) {
-			PreparedStatement pst = cx.prepareStatement("SELECT from PELICULAS WHERE id=?");
-			pst.setInt(0, id);		
+			PreparedStatement pst = cx.prepareStatement("SELECT * from PELICULAS WHERE id=?");
+			pst.setInt(1, id);		
 			ResultSet rs = pst.executeQuery();
 			/*
 			rs.first();
@@ -93,7 +97,7 @@ public class PeliculaDaoJdbcH2Implementation implements PeliculaDao{
 						rs.getString("TITULO"), 
 						rs.getString("DIRECTOR"), 
 						rs.getString("GENERO"), 
-						rs.getInt("YEAR"), 
+						rs.getInt("YEAR_"), 
 						rs.getString("SINOPSIS")
 					);
 			}
@@ -110,7 +114,7 @@ public class PeliculaDaoJdbcH2Implementation implements PeliculaDao{
 		List<Pelicula> peliculas = new ArrayList<>();
 		
 		try ( Connection cx = DriverManager.getConnection("jdbc:h2:C:/H2/bbdd_peliculas_2025","sa","");	) {
-			PreparedStatement pst = cx.prepareStatement("SELECT from PELICULAS");
+			PreparedStatement pst = cx.prepareStatement("SELECT * from PELICULAS");
 			ResultSet rs = pst.executeQuery();
 
 			while(rs.next()) {
@@ -119,7 +123,7 @@ public class PeliculaDaoJdbcH2Implementation implements PeliculaDao{
 						rs.getString("TITULO"), 
 						rs.getString("DIRECTOR"), 
 						rs.getString("GENERO"), 
-						rs.getInt("YEAR"), 
+						rs.getInt("YEAR_"), 
 						rs.getString("SINOPSIS")
 					);
 				peliculas.add(p);
