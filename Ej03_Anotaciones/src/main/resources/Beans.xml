@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<!-- 
+	Cuando tenemos que registrar una única definición de bean de una clase
+	que hemos programado nosotros podemos hacerlo con anotaciones
+	
+	Si no le decimos a spring que examine los paquetes para buscar las anotaciones el tio perro no lo hará
+	-->
+
+	<!--Spring mira en paquetes y subpaquetes-->
+	<context:component-scan base-package="com.curso.modelo.negocio"/>	
+	<context:component-scan base-package="com.curso.persistencia"/>	
+	<context:component-scan base-package="com.curso.util"/>	
+
+	<!-- 
+	<bean id="servicioPeliculas" class="com.curso.modelo.negocio.ServicioPeliculas">
+		<property name="peliculaDao" ref="peliculaDao"/>
+		<property name="log" ref="log"/>
+		<property name="logError" ref="logError"/>
+	</bean>
+	<bean id="peliculaDao" class="com.curso.modelo.persistencia.PeliculaDao">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	-->
+	
+	<!-- 
+	Aunque de la clase DriverManagerDataSource solo necesitamos una definición la clase no es nuestra, está en las librerías
+	Esta no tenemos más remedio que registrarla aquí
+	-->	
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="url"             value="jdbc:h2:C:/H2/bbdd_peliculas_2025"/>
+		<property name="driverClassName" value="org.h2.Driver"/>
+		<property name="username"        value="sa"/>
+		<property name="password"        value=""/>
+	</bean>
+	
+	<!-- 
+	Si la clase es nuestra pero necesitamos más de una definición de bean podemos crear una con anotaciones y el resto
+	en el xml
+	PERO la recomendación es registrarlas todas en el XML
+	-->
+	<bean id="log" class="com.curso.util.Logger">
+		<property name="nombreFichero" value="log.txt"/>
+	</bean>
+	<bean id="logError" class="com.curso.util.Logger">
+		<property name="nombreFichero" value="logError.txt"/>
+	</bean>
+	
+</beans>
+
+
+

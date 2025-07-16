@@ -7,17 +7,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity
-@Table(name="PELICULAS")
+//@Entity
+//@Table(name="PELICULAS")
 public class Pelicula {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	//@Id
+	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String titulo;
 	private String director;
 	private String genero;
-	@Column(name="YEAR_")
+	//@Column(name="YEAR_")
 	private Integer year;
 	private String sinopsis;
 
@@ -85,7 +85,7 @@ public class Pelicula {
 
 	@Override
 	public String toString() {
-		return "Pelicula [id=" + id + ", titulo=" + titulo + ", director=" + director + ", genero=" + genero + ", year="
+		return super.toString()+" [id=" + id + ", titulo=" + titulo + ", director=" + director + ", genero=" + genero + ", year="
 				+ year + ", sinopsis=" + sinopsis + "]";
 	}
 

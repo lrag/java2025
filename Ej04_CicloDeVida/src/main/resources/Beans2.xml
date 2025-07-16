@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<!--Spring mira el paquetes y subpaquetes-->
+	<context:component-scan base-package="com.curso.modelo.negocio"/>	
+
+	<!-- 
+	Esta bean implementa InitializingBean y DisposableBean
+	<bean id="beanCicloDeVida" class="com.curso.modelo.negocio.BeanCicloDeVida">
+		<property name="dato" value="A VER QUE PASA AQUI"></property>
+	</bean> 
+	-->
+		 
+	<bean id="beanCicloDeVida" 
+	      class="com.curso.modelo.negocio.BeanCicloDeVida"
+	      init-method="inicializar"
+	      destroy-method="finalizar">
+		<property name="dato" value="HABER KE PASA AKI"/>
+	</bean>	 
+
+	<!-- 
+	<bean id="Venancia" class="com.curso.modelo.negocio.BeanQueSabeComoSeLlama"/>
+	<bean id="Venancio" class="com.curso.modelo.negocio.BeanQueSabeComoSeLlama"/>
+
+	<bean id="beanQueSabeDondeVive" class="com.curso.modelo.negocio.BeanQueSabeDondeVive"/>
+	-->
+
+	<!-- En este ejemplo damos de alta dos beans de la misma clase -->
+	<bean id="logger" class="com.curso.util.Logger">
+		<property name="nombreFichero" value="log.txt"/>
+	</bean>
+	<bean id="loggerError" class="com.curso.util.Logger">
+		<property name="nombreFichero" value="error.txt"/>
+	</bean>
+	<bean id="gestorClientes" class="com.curso.modelo.negocio.GestorClientes">
+		<property name="logger" ref="logger"/>
+		<property name="loggerError" ref="loggerError"/>
+	</bean>	
+
+</beans>
+
+
+

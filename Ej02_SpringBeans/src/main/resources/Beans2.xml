@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 
+	Crea la instancia de persona llamando al constructor por defecto
+	y la deja tal cual
+	-->
+	<bean id="persona1" class="com.curso.modelo.entidad.Persona"/>
+
+	<!-- 
+	Spring puede invocar cualquier constructor
+	-->
+	<bean id="persona2" class="com.curso.modelo.entidad.Persona">
+		<constructor-arg value="Bart"/>
+		<constructor-arg value="10/10/2010"/>
+		<constructor-arg value="C/Barquillo"/>
+		<!-- Si hay algun conflicto entre constructores lo solucionamos indicando el tipo del parámetro-->
+		<!-- <constructor-arg type="java.lang.Integer" value="1138"/> -->
+		<constructor-arg value="1138"/>
+	</bean>	
+	
+	
+	<!-- Scopes (Ambitos) -->
+	<!-- Singleton (por defecto) -->
+	<!-- Prototype -->
+	<!-- Y para cuando estamos en web: -->
+	<!-- Request -->
+	<!-- Session -->
+	
+	<!-- Por defecto spring proporciona singletons -->	
+	<!-- pero podemos poner scope="singleton" para que quede claro -->
+	<!-- con lazy-init=false es el valor por defecto -->
+	<!-- La inicialización perezosa solo tiene sentido cuando el ámbito es singleton  -->
+	<bean id="persona3" class="com.curso.modelo.entidad.Persona" scope="singleton" lazy-init="false">
+		<property name="nombre" value="Lisa"/>
+		<property name="fechaNac" value="10/10/2010"/>
+		<property name="direccion" value="C/Barquillo"/>
+	</bean>	
+	
+	<!-- con lazy-init=true no se inicializan los singletons al arrancar el contenedor -->
+	<bean id="persona3Bis" class="com.curso.modelo.entidad.Persona" scope="singleton" lazy-init="true">
+		<property name="nombre" value="Lisa"/>
+		<property name="fechaNac" value="10/10/2010"/>
+		<property name="direccion" value="C/Barquillo"/>
+	</bean>	
+	
+	<!-- Scope="prototype" hace que cada vez nos den una instancia distinta -->
+	<bean id="persona4" class="com.curso.modelo.entidad.Persona" scope="prototype">
+		<property name="direccion" value="C/Barquillo"/>
+	</bean>	
+	
+	<!--                           -->
+	<!-- INYECCIÓN DE DEPENDENCIAS -->
+	<!--                           -->
+	
+	<!-- Inyecion de dependcias utilizando un objeto -->
+	<!-- Lo declaramos como INNER BEAN -->
+	<bean id="coche1" class="com.curso.modelo.entidad.Coche">
+		<property name="marca"  value="Renault"/>
+		<property name="modelo" value="R8"/>
+		<property name="seguro">
+			<bean class="com.curso.modelo.entidad.Seguro">
+				<property name="numPoliza" value="123AB45FGXX-T"/>
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- Ahora declaramos un seguro aparte -->
+	<bean id="seguro1" class="com.curso.modelo.entidad.Seguro">
+		<property name="numPoliza" value="789654441231-FF"/>
+	</bean>
+	
+	<bean id="coche2" class="com.curso.modelo.entidad.Coche">
+		<property name="marca"  value="Fiat"/>
+		<property name="modelo" value="Uno45s"/>
+		<property name="seguro" ref="seguro1"/>	
+	</bean>
+	
+	<bean id="coche3" class="com.curso.modelo.entidad.Coche">
+		<property name="marca"  value="Renault"/>
+		<property name="modelo" value="R5"/>
+		<property name="seguro" ref="seguro1"/>	
+	</bean>
+	
+	<!-- Autowiring -->
+	<!-- Si damos de alta los daos asi, tenemos que inyectarle el ds a todos 
+	<bean id="clienteDao" class="modelo.ClienteDao">
+		<property name="ds" ref="dataSource"/>	
+	</bean>	
+	
+	<bean id="facturaDao" class="modelo.FacturaDao">
+		<property name="ds" ref="dataSource"/>	
+	</bean>	-->
+	
+	<!-- Con autowire 'bytype' inyectara la bean que coincida con el tipo del atributo.
+	     Si hay mas de una bean de ese tipo (en este caso 'DriverManagerDataSource' falla.
+	     Si no lo encuentra, lo deja a nulo 
+	<bean id="clienteDao" class="modelo.ClienteDao" autowire="byType"/>
+	
+	 Con autowire 'byName' inyectará la bean que se llame igual que el atributo. 
+	<bean id="facturaDao" class="modelo.FacturaDao" autowire="byName"/>
+	
+	Como dar de alta una bean que es un singleton de verdad 
+	<bean id="singleton" class="modelo.Singleton" factory-method="getInstancia"/>
+	-->
+	
+	
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
+

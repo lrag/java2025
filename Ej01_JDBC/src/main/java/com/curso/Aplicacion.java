@@ -10,8 +10,8 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import com.curso.modelo.entidad.Pelicula;
-import com.curso.persistencia.PeliculaDao;
-import com.curso.persistencia.PeliculaDaoJdbcH2Implementation;
+import com.curso.modelo.negocio.ServicioPeliculas;
+import com.curso.persistencia.*;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -82,7 +82,11 @@ public class Aplicacion {
 		///////////////////////////////////////////////////////////////////////////
 		
 		Pelicula p1 = new Pelicula(null,"Alien","RS","CiFi",1979,"En el espacio nadie puede oirte gritar");
-		PeliculaDao peliculaDao = new PeliculaDaoJdbcH2Implementation();
+		//PeliculaDao peliculaDao = new PeliculaDaoJdbcH2ConDataSourceImplementation();
+		
+		PeliculaDao peliculaDao = PeliculaDaoJdbcH2ConDataSourceYSingletonImplementation.getInstancia();
+		
+		
 		//peliculaDao.insertar(p1);
 		List<Pelicula> peliculas = peliculaDao.listar();
 		for(Pelicula p: peliculas) {
@@ -108,7 +112,6 @@ public class Aplicacion {
 		System.out.println("Conexión obtenida del data source: "+cx3+", "+cx3.getClass().getName());
 		cx3.close();
 		
-		
 		Cliente c = new Cliente();
 		c.setNombre("Ringo Starr");
 		c.setDireccion("C/Su calle");
@@ -117,6 +120,16 @@ public class Aplicacion {
 			.setNombre("Ripley")
 			.setDireccion("C/Falsa, 123")
 			.setTelefono("555123456");
+		
+		
+		Pelicula p2 = new Pelicula();
+		Pelicula p3 = new Pelicula();
+		System.out.println(p2);
+		System.out.println(p3);
+		
+		/////////////////////////////////////////////////////////
+		ServicioPeliculas sp = ServicioPeliculas.getInstancia();
+		
 		
 	}
 	
