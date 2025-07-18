@@ -26,20 +26,13 @@ public class SVPeliculas_MVC extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		System.out.println("Petición recibida en SVPeliculas_MVC");
-		
 		List<Pelicula> peliculas = servicioPeliculas.listarPeliculas();
-		
 		request.setAttribute("listaPeliculas", peliculas);
-		
-		request.getRequestDispatcher("/jsp/listadoPeliculas.jsp").forward(request, response);
-		
+		request.getRequestDispatcher("/WEB-INF/jsp/listadoPeliculas.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-	
 	}
 
 }

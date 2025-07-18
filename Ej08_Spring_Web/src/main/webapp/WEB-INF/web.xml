@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+  <display-name>Ej08_Spring_Web_</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>index.xhtml</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+    <welcome-file>default.xhtml</welcome-file>
+  </welcome-file-list>
+
+	<context-param>
+	    <param-name>contextClass</param-name>
+	    <param-value>
+	        org.springframework.web.context.support.AnnotationConfigWebApplicationContext
+	    </param-value>
+	</context-param>	
+	
+	<context-param>
+	    <param-name>contextConfigLocation</param-name>
+	    <param-value>
+	        com.curso.cfg.Configuracion
+	    </param-value>
+	</context-param>	
+		
+	<!-- Este oyente es el que crea el contenedor de Spring -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<!-- Este oyente avisa al contenedor de Spring de que ha llegado una nueva petición -->
+	<listener>
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
+
+
+
+</web-app>
