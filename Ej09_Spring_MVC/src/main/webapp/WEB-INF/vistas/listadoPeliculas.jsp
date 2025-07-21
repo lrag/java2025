@@ -11,12 +11,12 @@
 
 	<h1 align="center">
 		<font color="lightGreen">
-			Listado de pedidos
+			Listado de películas
 		</font>
 	</h1>
 
 	<p align="center">
-		<a href="verFormularioPedidos">Nuevo</a>
+		<a href="formularioPeliculas">Nueva</a>
 	</p>
 	
 	<div align="center">
@@ -25,22 +25,25 @@
 
 	<table align="center" border="1">
 		<tr>
-			<th>Codigo</th>
-			<th>Cliente</th>
+			<th>Título</th>
+			<th>Director</th>
+			<th>Genero</th>
 			<th>Fecha</th>
-			<th>Estado</th>
 		</tr>	
-		<c:forEach var="p" items="${listaPedidos}">
+		<c:forEach var="p" items="${peliculas}">
 			<tr>
 				<td>
+					<!-- 
 					<c:url var="url" value="seleccionarPedido">
 						<c:param name="id" value="${p.id}"/>
 					</c:url>					
-					<a href="${url}">${p.codigo}</a>
+					<a href="${url}">${p.titulo}</a>
+					-->
+					${p.titulo}
 				</td>			
-				<td>${p.cliente.nombre}</td>			
-				<td>${p.fecha}</td>			
-				<td>${p.estado}</td>			
+				<td>${p.director}</td>			
+				<td>${p.genero}</td>			
+				<td>${p.fechaEstreno}</td>			
 			</tr>
 		</c:forEach>
 	</table>	
