@@ -34,18 +34,20 @@
 			<tr>
 				<td>
 					<!-- 
-					<c:url var="url" value="seleccionarPedido">
-						<c:param name="id" value="${p.id}"/>
-					</c:url>					
-					<a href="${url}">${p.titulo}</a>
+					<a href="seleccionarPelicula?idPelicula=${p.id}">${p.titulo}</a>
 					-->
-					${p.titulo}
+					<a href="seleccionarPelicula/${p.id}">${p.titulo}</a>
 				</td>			
 				<td>${p.director}</td>			
 				<td>${p.genero}</td>			
-				<td>${p.fechaEstreno}</td>			
+				<td>${p.year}</td>			
 			</tr>
 		</c:forEach>
+		<c:if test="${peliculas.size()==0}">
+			<tr>
+				<td>No hay películas en la base de datos.</td>
+			</tr>
+		</c:if>
 	</table>	
 
 </body>

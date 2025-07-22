@@ -6,19 +6,19 @@ public class Pelicula {
 	private String titulo;
 	private String director;
 	private String genero;
-	private String fechaEstreno;
+	private Integer year;
 
 	public Pelicula() {
 		super();
 	}
 
-	public Pelicula(Integer id, String titulo, String director, String genero, String fechaEstreno) {
+	public Pelicula(Integer id, String titulo, String director, String genero, Integer year) {
 		super();
 		this.id = id;
 		this.titulo = titulo;
 		this.director = director;
 		this.genero = genero;
-		this.fechaEstreno = fechaEstreno;
+		this.year = year;
 	}
 
 	public Integer getId() {
@@ -53,12 +53,12 @@ public class Pelicula {
 		this.genero = genero;
 	}
 
-	public String getFechaEstreno() {
-		return fechaEstreno;
+	public Integer getYear() {
+		return year;
 	}
 
-	public void setFechaEstreno(String fechaEstreno) {
-		this.fechaEstreno = fechaEstreno;
+	public void setYear(Integer year) {
+		this.year = year;
 	}
 
 }

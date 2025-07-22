@@ -38,16 +38,24 @@
 		<!-- Scriptlet -->
 		<%
 		List<Pelicula> peliculas = (List<Pelicula>) request.getAttribute("listaPeliculas");
-		for(Pelicula p: peliculas){
-		%>
-			<tr>
-				<td><%out.println(p.getTitulo());%></td>
-				<td><%=p.getDirector()%></td>
-				<td><%=p.getGenero()%></td>
-				<td><%=p.getFechaEstreno()%></td>
-			</tr>
-		<%
-		} 
+		if(peliculas!=null && peliculas.size()>0) {
+			for(Pelicula p: peliculas){
+			%>
+				<tr>
+					<td><%out.println(p.getTitulo());%></td>
+					<td><%=p.getDirector()%></td>
+					<td><%=p.getGenero()%></td>
+					<td><%=p.getFechaEstreno()%></td>
+				</tr>
+			<%
+			}
+		} else {
+			%>
+				<tr>
+					<td colspan="4">No hay películas</td>
+				</tr>			
+			<%
+		}
 		%>
 	</table>
 

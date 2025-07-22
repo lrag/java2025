@@ -28,6 +28,12 @@
 				<td>${p.fechaEstreno}</td>
 			</tr>	
 		</c:forEach>
+		<c:if test="${listaPeliculas.size() == 0}">
+			<tr>
+				<td colspan="4">
+					No hay películas
+				</td>
+		</c:if>
 	</table>
 
 </body>
