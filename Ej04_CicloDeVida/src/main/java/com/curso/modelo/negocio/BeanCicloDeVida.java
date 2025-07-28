@@ -1,7 +1,7 @@
 package com.curso.modelo.negocio;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
+//import javax.annotation.PostConstruct;
+//import javax.annotation.PreDestroy;
 
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
@@ -49,12 +49,12 @@ public class BeanCicloDeVida implements InitializingBean, DisposableBean {
 
 	//Tambien se le puede pedir a Spring que busque las anotaciones
 	//JEE para el ciclo de vida	
-	@PostConstruct
+	//@PostConstruct
 	public void inicializar2() throws Exception{
 		System.out.println("BeanCicloDeVida.inicializar2");
 	}
 	
-	@PreDestroy
+	//@PreDestroy
 	public void destruir2() throws Exception{
 		System.out.println("BeanCicloDeVida.finalizar2");
 	}

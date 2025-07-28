@@ -1,5 +1,6 @@
 package com.curso.modelo.entidad;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,7 +23,7 @@ public class DatosBancarios {
 
 	//Relación de uno a uno con dos tablas
 	//Extremo obligatorio (La FK está en la tabla 'datos_bancarios')
-	@OneToOne/*(cascade= CascadeType.ALL)*/ //Este cascade claramente sobra
+	@OneToOne(cascade= CascadeType.ALL) //Este cascade claramente sobra
 	@JoinColumn(name = "fk_id_cliente", referencedColumnName = "id")
 	private Cliente cliente;
 

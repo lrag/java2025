@@ -26,19 +26,21 @@ public class PruebasOneToOne {
 		em = emf.createEntityManager();
 		em.getTransaction().begin();
 		
-		//Podemos guardarlos individualmente y en orden
+		//Podemos guardarlos individualmente y en ordasegurandonos de que los inserts se ejecutan en el orden correcto
 		//em.persist(c);  //Aqui el cliente no tiene ID 
 		//em.persist(db); //Aqui si
 		
 		//Como hemos definido la relación en las dos clases podriamos, insertando
 		//solo un objeto, insertar los dos
 		
-		em.persist(c); //-> se insertan los DB por el cascade que hay en Cliente
-		//em.persist(db); //-> se inserta el cliente por el cascade de DatosBancarios
+		//em.persist(c); //-> se insertan los DB por el cascade que hay en Cliente
+		em.persist(db); //-> se inserta el cliente por el cascade de DatosBancarios
 		
 		em.getTransaction().commit(); 
 		em.close();		
 
+		
+		System.exit(0);
 		
 		///////////
 		//CASCADE//

@@ -68,25 +68,28 @@ public class PruebasOneToMany {
 		System.out.println("Id del cliente:"+c.getId());
 
 		
+		
+		
 		////////////////////
 		//Cargas perezosas//
 		////////////////////
 		System.out.println("==============================================");
 		em = emf.createEntityManager();
-
+		
 		Cliente c2 = em.find(Cliente.class, c.getId());
 		System.out.println(c2.getNombre());
 		System.out.println(c2.getDatosBancarios().getBanco());
 
-		//c2.getPedidos().size();
+		c2.getPedidos().size();
 		
+		em.close();
+		
+		System.out.println("Accedemos a los pedidos:");
 		
 		for(Pedido pAux: c2.getPedidos()){
 			System.out.println(pAux.getCodigo());
 		}
-		
-		em.close();
-		
+				
 		emf.close();
 		
 	}

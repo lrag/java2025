@@ -153,10 +153,7 @@ public class Pruebas_EntityManager {
 		//Ahora no hay update, porque hemos hecho 'refresh'
 		em.getTransaction().commit(); //.rollback();
 		em.close();		
-		
-		
-		System.exit(42);
-		
+
 		
 		/////////////////
 		//OTROS MÉTODOS//
@@ -166,6 +163,22 @@ public class Pruebas_EntityManager {
 		//DETACH: Solicitamos al em que se 'olvide' de una entidad que tiene en la caché
 		//
 		//em.detach(e);
+		System.out.println("=========================================");		
+		em = emf.createEntityManager();
+		em.getTransaction().begin();
+		
+		Pelicula p8 = em.find(Pelicula.class, p7.getId());
+		p8 = em.find(Pelicula.class, p7.getId()); //No hay select porque ya está en la caché
+		//Si quisieramos volver a meter el objeto en la caché haríamos un merge
+		
+		em.detach(p8); //El objeto se elimina de la caché
+		
+		p8 = em.find(Pelicula.class, p7.getId()); //Otra vez select y otra vez vuelve a estar enla caché (un objeto nuevo)
+		
+		em.getTransaction().commit();
+		em.close();
+		
+		
 		
 		//
 		//CLEAR: Vacía la caché de primer nivel. 
@@ -181,16 +194,18 @@ public class Pruebas_EntityManager {
 		/////////////////////////////////////////
 		//JPQL: Java Persistence Query Language//
 		/////////////////////////////////////////
+
 		System.out.println("=========================================");		
 		em = emf.createEntityManager();
 		
 		//select p.* from peliculas as p
 		//select p from Pelicula as p
 		Query q = em.createQuery("select p from Pelicula p"); //El 'as' es opcional y no lo pone nadie
-		List<Pelicula> peliculas = q.getResultList();
+		List<Pelicula> peliculas = q.getResultList(); //Las películas de la lista están enla caché
 		for(Pelicula pAux: peliculas) {
 			System.out.println(pAux);
 		}
+		
 		
 		em.close();
 		

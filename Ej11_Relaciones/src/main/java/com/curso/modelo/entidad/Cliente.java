@@ -17,6 +17,42 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Transient;
 
+
+
+
+/*
+
+clientes
+ID | NOMBRE | TELEFONO | CIUDAD | CALLE | NUMERO | CODIGO_POSTAL
+----------------------------------------------------------------
+   |        |          |        |       |        |
+   
+   
+datos_bancarios   
+ID | FK_ID_CLIENTE | BANCO | NUMERO_TC
+--------------------------------------   
+   |               |       |
+   
+pedidos   
+ID | FK_ID_CLIENTE | CODIGO | FECHA | ...   
+-----------------------------------------
+   
+
+Los clientes de una ciudad:
+   
+FELIZ 50 CUMPLAÑOS SQL!   
+SQL  : select c.* from cliente as c where c.ciudad="Santa Pola"
+JPQL : select c from Cliente c where c.direccion.ciudad = "Chinchón"    
+
+Los pedidos de un cliente:
+
+SQL  : select p.* from pedido as p where p.fk_id_cliente = ?
+JPQL : select p from Pedido p where p.cliente.id = ?
+
+
+*/
+
+
 @Entity
 public class Cliente {
 
@@ -28,7 +64,7 @@ public class Cliente {
 
 	// Relación de uno a uno con una sola tabla
 	@Embedded
-	//Si en el embeddable se indica un nombre de columna que no interesa
+	//Si en el embeddable se indica un nombre de columna que no interesa aqui
 	//se puede 'sobreescribir'
 	//Tambien se puede aplicar a la Herencia
 	@AttributeOverrides({
