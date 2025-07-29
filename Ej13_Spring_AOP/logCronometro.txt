@@ -1,0 +1,4 @@
+2025-07-29T13:04:58.810: Llamada al metodo insertar de class java.lang.reflect.Method procesada en 508 milisegundos.
+2025-07-29T13:04:59.819: Llamada al metodo borrar de class java.lang.reflect.Method procesada en 1008 milisegundos.
+2025-07-29T13:05:01.341: Llamada al metodo insertar de class java.lang.reflect.Method procesada en 1520 milisegundos.
+2025-07-29T13:05:03.358: Llamada al metodo borrar de class java.lang.reflect.Method procesada en 2017 milisegundos.

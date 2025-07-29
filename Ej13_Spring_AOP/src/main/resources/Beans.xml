@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<!-- Logger -->
+	<bean id="logger" class="com.curso.util.Logger">
+		<property name="nombreFichero" value="log.txt"/>
+	</bean>
+	<bean id="loggerCronometro" class="com.curso.util.Logger">
+		<property name="nombreFichero" value="logCronometro.txt"/>
+	</bean>
+
+	<!-- ADVICE: Sabe QUÉ hay que hacer. Estas clases guardan el código del cual hemos sacado factor común -->
+	<bean id="logAdvice" class="com.curso.modelo.negocio.aop.LogAdvice">
+		<constructor-arg ref="logger"/>
+	</bean>	
+	<bean id="cronometroAdvice" class="com.curso.modelo.negocio.aop.CronometroAdvice">
+		<constructor-arg ref="loggerCronometro"/>
+	</bean>	
+	
+	<!-- Pointcut: Cuándo -->
+	<bean id="negocioPointcut" class="org.springframework.aop.support.JdkRegexpMethodPointcut">
+		<!-- PATRONES 
+		.*insertarCliente : El metodo 'insertarCliente' de cualquier clase y paquete
+		.*insertar.*      : Métodos cuyo nombre comience por 'insertar' de cualquier clase y paquete
+		com.curso.modelo.negocio.GestorClientes.*(..) : Cualquier método de la clase GestorClientes
+		com.curso.modelo.negocio.*.*(..): Cualquier metodo de cualquier clase del paquete negocio
+		<property name="pattern" value="com.curso.modelo.negocio.GestorClientes.*(..)"/>		
+		<property name="pattern" value="com.curso.modelo.negocio.GestorClientes.*insertar"/>		
+		-->		
+		<property name="pattern" value="com.curso.modelo.negocio.*.*(..)"/>		
+	</bean>		
+
+	<!-- Advisor: Junta el QUÉ con el CUÁNDO -->
+	<bean id="logAdvisor" class="org.springframework.aop.support.DefaultPointcutAdvisor">
+		<property name="advice" ref="logAdvice"/>
+		<property name="pointcut" ref="negocioPointcut"/>
+	</bean>		
+	<bean id="cronometroAdvisor" class="org.springframework.aop.support.DefaultPointcutAdvisor">
+		<property name="advice" ref="cronometroAdvice"/>
+		<property name="pointcut" ref="negocioPointcut"/>
+	</bean>		
+
+	<!-- 
+	PROXYS 
+	ProxyFactoryBean implementa InitializingBean, ApplicationContextAware y BeanNameAware 
+	Solo puede hacer proxys a partir de interfaces
+	-->
+	<bean id="servicioClientes" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="proxyInterfaces" value="com.curso.modelo.negocio.ServicioClientes"/>
+		<property name="interceptorNames">
+			<list>
+				<value>logAdvisor</value>
+				<value>cronometroAdvisor</value>
+			</list>
+		</property>
+		<property name="target" ref="servicioClientesTarget"/>
+		
+		
+		<!-- Si damos de alta al target como inner bean nadie podrá acceder a ella saltándose los aspectos -->
+		<!-- 
+		<property name="target">
+			<bean class="com.curso.modelo.negocio.GestorClientesImpl"/>
+		</property>
+		-->	
+	</bean>
+
+	<!-- Target -->
+	<bean id="servicioClientesTarget" class="com.curso.modelo.negocio.ServicioClientesImpl"/>
+	<bean id="servicioEmpleados" class="com.curso.modelo.negocio.ServicioEmpleados"/>
+
+
+
+
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,8 @@
+2025-07-29T13:04:58.301: Llamada al método insertar de class com.curso.modelo.negocio.ServicioClientesImpl
+2025-07-29T13:04:58.810: Fin de la llamada al método insertar de class com.curso.modelo.negocio.ServicioClientesImpl
+2025-07-29T13:04:58.811: Llamada al método borrar de class com.curso.modelo.negocio.ServicioClientesImpl
+2025-07-29T13:04:59.819: Fin de la llamada al método borrar de class com.curso.modelo.negocio.ServicioClientesImpl
+2025-07-29T13:04:59.821: Llamada al método insertar de class com.curso.modelo.negocio.ServicioEmpleados
+2025-07-29T13:05:01.341: Fin de la llamada al método insertar de class com.curso.modelo.negocio.ServicioEmpleados
+2025-07-29T13:05:01.341: Llamada al método borrar de class com.curso.modelo.negocio.ServicioEmpleados
+2025-07-29T13:05:03.358: Fin de la llamada al método borrar de class com.curso.modelo.negocio.ServicioEmpleados
