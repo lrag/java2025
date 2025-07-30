@@ -3,6 +3,7 @@ package com.curso.modelo.negocio;
 import java.util.List;
 import java.util.Vector;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.curso.modelo.entidad.Pelicula;
@@ -35,5 +36,7 @@ public class ServicioPeliculas {
 	public Pelicula buscarPelicula(Integer id){
 		return peliculas.get(id-1);
 	}
+	
+	
 
 }

@@ -10,16 +10,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.curso.modelo.entidad.Pelicula;
+import com.curso.modelo.negocio.ServicioGeneros;
 import com.curso.modelo.negocio.ServicioPeliculas;
 
 @Controller
 public class ControladorPeliculas {
 
 	private ServicioPeliculas servicioPeliculas;
-
-	public ControladorPeliculas(ServicioPeliculas servicioPeliculas) {
+	private ServicioGeneros   servicioGeneros;
+	
+	public ControladorPeliculas(ServicioPeliculas servicioPeliculas, ServicioGeneros servicioGeneros) {
 		super();
 		this.servicioPeliculas = servicioPeliculas;
+		this.servicioGeneros = servicioGeneros;
 	}
 
 	@GetMapping(path = "/listadoPeliculas")
@@ -34,14 +37,16 @@ public class ControladorPeliculas {
 	@GetMapping(path = "/formularioPeliculas")
 	public ModelAndView verFormularioPeliculas() {
 		return new ModelAndView("formularioPeliculas")
-			.addObject("pelicula", new Pelicula());			
+			.addObject("pelicula", new Pelicula())
+			.addObject("generos", servicioGeneros.listarGeneros());			
 	}
 
 	@GetMapping(path = "/seleccionarPelicula/{id}")
 	public ModelAndView seleccionarPelicula(@PathVariable("id") Integer idPelicula) { 
 		Pelicula pSel = servicioPeliculas.buscarPelicula(idPelicula);
 		return new ModelAndView("formularioPeliculas")
-			.addObject("pelicula", pSel);		
+			.addObject("pelicula", pSel)
+			.addObject("generos", servicioGeneros.listarGeneros());			
 	}
 
 	//Tambien podemos escribir el método así

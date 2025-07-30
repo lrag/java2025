@@ -125,7 +125,24 @@ window.onload = function(){
 			<tr>
 				<td>Género</td>
 				<td>
+					<!-- 
 					<form:input path="genero" id="genero"/>
+					-->
+					
+					<!-- 
+					<select name="genero">
+						<option value="">Seleccione...</option>
+						<c:forEach items="${generos}" var="g">
+							<option value="${g.id}">${g.nombre}</option>
+						</c:forEach>
+					</select>
+					-->
+
+					<form:select path="genero">
+						<option value="">Seleccione...</option>
+						<form:options items="${generos}" itemValue="nombre" itemLabel="nombre" />
+					</form:select>
+					
 				</td>
 			</tr>	
 			<tr>

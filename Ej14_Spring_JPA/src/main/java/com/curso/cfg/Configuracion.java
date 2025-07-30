@@ -6,19 +6,17 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
-@ComponentScan(basePackages="com.curso.modelo")
-@EnableTransactionManagement
 public class Configuracion {
 
+	
 	/*
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -27,24 +25,22 @@ public class Configuracion {
 		<property name="username" value="root" />
 		<property name="password" value="root" />
 	</bean>
-	*/
+	*/	
 	
 	@Bean
-	//@Scope("singleton")
 	DataSource dataSource() {
-		System.out.println("=================================");
-		System.out.println("CREANDO EL DATASOURCE");
-		//Cuidado que este no tiene pool de conexiones
-		DriverManagerDataSource ds = new DriverManagerDataSource();
+		System.out.println("=====================================================");
+		System.out.println("Creando el datasource");
+
+		HikariDataSource ds = new HikariDataSource();
+		ds.setJdbcUrl("jdbc:h2:file:c:/h2/bbdd_spring_jpa");
 		ds.setDriverClassName("org.h2.Driver");
-		ds.setUrl("jdbc:h2:file:c:/h2/bbdd_spring_Pruebecillas");
 		ds.setUsername("sa");
 		ds.setPassword("");
 		return ds;
 	}
 
 	@Bean
-	//Singleton
 	LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
 		LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
 		//Usaremos este datasource para que JPA obtenga las conexiones
@@ -65,6 +61,8 @@ public class Configuracion {
 		jpaProperties.put("hibernate.hbm2ddl.auto", "update");
 		jpaProperties.put("hibernate.show_sql", "true");
 		jpaProperties.put("hibernate.format_sql", "false");
+		jpaProperties.put("hibernate.highlight_sql", "true");
+		
 		entityManagerFactoryBean.setJpaProperties(jpaProperties);
 
 		return entityManagerFactoryBean;
@@ -76,5 +74,6 @@ public class Configuracion {
 		transactionManager.setEntityManagerFactory(entityManagerFactory);
 		return transactionManager;
 	}	
+	
 	
 }
