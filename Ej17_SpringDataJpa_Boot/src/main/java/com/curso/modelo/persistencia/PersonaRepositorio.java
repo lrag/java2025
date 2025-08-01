@@ -12,15 +12,17 @@ import com.curso.modelo.entidad.Persona;
 //Esta anotación es completamente opcional
 @Repository
 public interface PersonaRepositorio extends JpaRepository<Persona, Integer>{
-
 	
 	List<Persona> findByDireccion(String direccion);
 	
 	List<Persona> findByDireccionOrTelefono(String direccion, String telefono);
+	
+	//Tambien tenemos findOne
+	Persona findOneByDireccion(String direccion);
 
 	//JPQL 
-	//@Query("select p from Persona where p.direccion=:direccion")
-	@Query("select p from Persona p where p.direccion=?1")
+	//@Query("select p from Persona p where p.direccion=?1")
+	@Query("select p from Persona where p.direccion=:direccion")
 	List<Persona> findByMovida(String direccion);
 	
 	//@Transactional
